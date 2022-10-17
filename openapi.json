@@ -1,0 +1,265 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge Chapter-8 API",
+    "description": "Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.",
+    "version": "0.1.9"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/api/players": {
+      "get": {
+        "summary": "Returns a list of players",
+        "tags": ["players"],
+        "description": "Optional extended description in CommonMark or HTML",
+        "responses": {
+          "200": {
+            "description": "List of players",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "exp": {
+                      "type": "integer"
+                    },
+                    "lvl": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a player.",
+        "tags": ["players"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "exp": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created new player"
+          }
+        }
+      }
+    },
+    "/api/players/{id}": {
+      "get": {
+        "summary": "Get players by id",
+        "tags": ["players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "id of players to return",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A user object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64",
+                      "example": 4
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "Ihsan Karami"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "ihsan@mail.com"
+                    },
+                    "exp": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "lvl": {
+                      "type": "integer",
+                      "example": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified player ID is invalid (not a number)."
+          },
+          "404": {
+            "description": "Player ID was not found."
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update player properties by id",
+        "tags": ["players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "id of players to return",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "exp": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Edited player"
+          },
+          "400": {
+            "description": "Cannot update player"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete players by id",
+        "tags": ["players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "id to delete json object"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/api/players/exp/{id}": {
+      "post": {
+        "summary": "Delete players by id",
+        "tags": ["players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "exp": {
+                    "description": "Input exp",
+                    "type": "string"
+                  }
+                },
+                "required": ["exp"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
+      }
+    }
+  }
+}
